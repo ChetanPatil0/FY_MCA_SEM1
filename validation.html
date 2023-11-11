@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment3</title>
+    <style>
+        .form input{
+        margin-left: 5px;
+        }
+    </style>
+    <script>
+        function validateform(){
+                var error = document.getElementById("errormsg");
+                var fname = document.getElementById("fname").value;
+                var lname = document.getElementById("lname").value;
+                var Password = document.getElementById("Password").value;
+                var email = document.getElementById("email").value;
+                var contact = document.getElementById("contact").value;
+                var Address =document.getElementById("Address").value;
+                var letters=/^[a-zA-Z]+$/;
+                var Character =/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+                var flag=1;
+                
+                
+                if(fname.length == 0) {
+                    error.innerHTML = "**Please Enter The First Name";
+                    flag=0;
+                }
+                else if(!letters.test(fname))
+                {
+                    error.innerHTML = "**Enter Only Alphabets In First Name**";
+                    flag=0;
+                }
+                else if(fname.length < 6)
+                {
+                    error.innerHTML = "**Enter Atleast 6 Or More Character In First Name**";
+                    flag=0;
+                }
+                else if(lname.length == 0) {
+                    error.innerHTML = "** Please Enter The Last Name**";
+                    flag=0;
+                }
+                else if(email.length == 0) {
+                    error.innerHTML = "** Please Enter The Email Id**";    
+                    flag=0;
+                }
+                else if(!Character.test(email))
+                {
+                    error.innerHTML = "** Enter Valid Email Id**";
+                    flag=0;
+                }
+                else if (contact.length != 10 )
+                {
+                    error.innerHTML = "** Enter Valid Mobile Number**";
+                    flag=0;
+                }
+                else if(Password.length == 0) {
+                    error.innerHTML = "** Please Enter The Password**";
+                    flag=0;
+                }
+                else if(Password.length < 6)
+                {
+                    error.innerHTML = "** Enter Atleast 6 Or More Character In Password**";
+                    flag=0;
+                }
+                else if(Address.length==0)
+                {
+                    error.innerHTML = "** Please Enter The Address **";
+                    flag=0;
+                }
+                else{
+                    error.innerHTML = "";
+                }
+
+             if(flag==1)
+             {
+                return true;
+             }
+             else{
+                return false;
+             }
+        }
+
+    
+    </script>
+</head>
+<body>
+    <form onsubmit="return validateform();"style="margin: auto;padding:30px;border: solid crimson 3px; width:300px;" class="form" >
+    <center><h2 style="color:#386dc3;">REGISTRATION PAGE</h2></center>
+        <h3 id="errormsg" style="color: red; text-align: center;"></h3>
+            <label>FIRST NAME :</label><input type="text" placeholder="Enter First Name" id="fname"><br><br>
+            <label>LAST NAME :</label><input type="text" placeholder="Enter Last Name" id="lname"><br><br>
+            <label>USER EMAIL:</label><input type="text" placeholder="Enter Email Id" id="email"><br> <br>
+            <label>MOBILE NO :</label><input type="number" placeholder="Enter Mobile Number" id="contact"><br><br>
+            <label>PASSWORD :</label><input type="password" placeholder="Enter Password" id="Password"><br><br>
+            <label>ADDRESS : </label><textarea cols="35" rows="5" placeholder="Enter Address" id="Address"></textarea><br><br>
+            <center ><input type="reset" value="RESET" style="padding:5px; background-color:#3B71CA;color: white;">
+            <input type="submit" value="SUBMIT" style="padding: 5px;background-color:#3B71CA;color: white;"> </center>
+    </form>
+</body>
+</html> 
