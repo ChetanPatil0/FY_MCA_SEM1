@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="timerApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timer Application</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    #timer {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    button {
+      font-size: 1em;
+      padding: 10px;
+      margin: 5px;
+      cursor: pointer;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script>
+    angular.module('timerApp', [])
+      .controller('TimerController', ['$scope', '$interval', function($scope, $interval) {
+        $scope.timeInSeconds = 0;
+        $scope.timerRunning = false;
+        var intervalPromise;
+
+        $scope.startTimer = function() {
+          if (!$scope.timerRunning) {
+            intervalPromise = $interval(function() {
+              $scope.timeInSeconds++;
+            }, 1000);
+            $scope.timerRunning = true;
+          }
+        };
+
+        $scope.stopTimer = function() {
+          if ($scope.timerRunning) {
+            $interval.cancel(intervalPromise);
+            $scope.timerRunning = false;
+          }
+        };
+
+        $scope.resetTimer = function() {
+          $scope.timeInSeconds = 0;
+          $scope.stopTimer();
+        };
+
+        $scope.$on('$destroy', function() {
+          $scope.stopTimer();
+        });
+
+        $scope.formatTime = function(seconds) {
+          var minutes = Math.floor(seconds / 60);
+          var remainingSeconds = seconds % 60;
+          return pad(minutes) + ':' + pad(remainingSeconds);
+        };
+
+        function pad(value) {
+          return (value < 10) ? '0' + value : value;
+        }
+      }]);
+  </script>
+</head>
+<body ng-controller="TimerController">
+
+  <h1>Timer Application</h1>
+
+  <div id="timer">{{ formatTime(timeInSeconds) }}</div>
+
+  <button ng-click="startTimer()" ng-disabled="timerRunning">Start</button>
+  <button ng-click="stopTimer()" ng-disabled="!timerRunning">Stop</button>
+  <button ng-click="resetTimer()">Reset</button>
+
+</body>
+</html>
